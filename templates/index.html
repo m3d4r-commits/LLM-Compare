@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LLM Comparison</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        canvas.matrix-canvas {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        body.matrix-mode canvas.matrix-canvas {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <canvas class="matrix-canvas"></canvas>
+    <h1>Compare LLM Responses</h1>
+
+    <div class="toggle-container">
+        <button class="toggle-btn" onclick="toggleTheme()">Matrix Mode</button>
+    </div>
+
+    <div class="llm-info">
+        <p>Comparing responses from:</p>
+        <ul>
+            <li><strong>LLM 1:</strong> Gemini 2.5 Pro (Response Time: {{ times["LLM 1"] }} seconds)</li>
+            <li><strong>LLM 2:</strong> ChatGPT 3.5-turbo (Response Time: {{ times["LLM 2"] }} seconds)</li>
+            <li><strong>LLM 3:</strong> DeepSeek v3 (Response Time: {{ times["LLM 3"] }} seconds)</li>
+        </ul>
+    </div>
+
+    <form method="POST">
+        <label for="question">Enter your question:</label><br>
+        <input type="text" id="question" name="question" placeholder="Type your question here..." required><br><br>
+
+        <label for="analyzer">Select analysis model (ChatGPT or Claude):</label><br>
+        <select name="analyzer" id="analyzer">
+            <option value="claude" {% if analyzer_choice == 'claude' %}selected{% endif %}>Claude 3</option>
+            <option value="gpt" {% if analyzer_choice == 'gpt' %}selected{% endif %}>ChatGPT 3.5-turbo</option>
+        </select><br><br>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    {% if result_1 and result_2 and result_3 %}
+        <div class="results-container">
+            <div class="result-box">
+                <h2>Response from Gemini 2.5 Pro</h2>
+                <p>{{ result_1 }}</p>
+            </div>
+            <div class="result-box">
+                <h2>Response from ChatGPT 3.5-turbo</h2>
+                <p>{{ result_2 }}</p>
+            </div>
+            <div class="result-box">
+                <h2>Response from DeepSeek v3</h2>
+                <p>{{ result_3 }}</p>
+            </div>
+            <div class="result-box">
+                <h2>Analysis of Differences by {{ "Claude 3" if analyzer_choice == "claude" else "ChatGPT 3.5-turbo" }}</h2>
+                <pre>{{ analysis }}</pre>
+            </div>
+        </div>
+    {% endif %}
+
+    <script>
+        function toggleTheme() {
+            document.body.classList.toggle("matrix-mode");
+            localStorage.setItem("theme", document.body.classList.contains("matrix-mode") ? "matrix" : "default");
+        }
+
+        window.onload = () => {
+            const savedTheme = localStorage.getItem("theme");
+            if (savedTheme === "matrix") {
+                document.body.classList.add("matrix-mode");
+            }
+
+            const canvas = document.querySelector(".matrix-canvas");
+            const ctx = canvas.getContext("2d");
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            const letters = Array(256).join(1).split("");
+            const fontSize = 14;
+            const columns = canvas.width / fontSize;
+            const drops = Array(Math.floor(columns)).fill(1);
+
+            function drawMatrix() {
+                if (!document.body.classList.contains("matrix-mode")) return;
+                ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.fillStyle = "#0F0";
+                ctx.font = fontSize + "px monospace";
+
+                for (let i = 0; i < drops.length; i++) {
+                    const text = String.fromCharCode(0x30A0 + Math.random() * 96);
+                    ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                    if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                        drops[i] = 0;
+                    }
+                    drops[i]++;
+                }
+            }
+
+            setInterval(drawMatrix, 50);
+        };
+    </script>
+</body>
+</html>
