@@ -76,6 +76,14 @@ templates/
 - **Themes**: Modify the `static/styles.css` file to customize the appearance.
 - **Matrix Mode**: The "Matrix Mode" can be toggled using the button in the UI.
 
+## Screenshots
+
+### 🔍 Comparison View
+![Screenshot 1](assets/screenshot1.png)
+
+### 🧪 Matrix Mode
+![Screenshot 2](assets/screenshot2.png)
+
 ## API Integration
 
 - **Gemini 2.5 Pro**: Uses Google Generative AI API.
