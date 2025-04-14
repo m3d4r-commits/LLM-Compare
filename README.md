@@ -1,3 +1,6 @@
+![Python](https://img.shields.io/badge/Python-3.8%2B-blue)
+![Flask](https://img.shields.io/badge/Flask-Web_App-orange)
+![License](https://img.shields.io/github/license/m3d4r-commits/LLM-Compare)
 # LLM Comparison Web App
 
 This project is a Flask-based web application that allows users to compare responses from multiple Large Language Models (LLMs) and analyze their differences. It supports models like Gemini 2.5 Pro, ChatGPT 3.5-turbo, and DeepSeek v3, with analysis powered by either Claude 3 or ChatGPT.
