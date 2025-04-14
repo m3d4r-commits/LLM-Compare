@@ -81,10 +81,10 @@ templates/
 
 ## API Integration
 
-- **Gemini 2.5 Pro**: Uses Google Generative AI API.
-- **ChatGPT 3.5-turbo**: Uses OpenAI API.
-- **DeepSeek3**: Uses DeepSeek API.
-- **Claude 3**: Uses Anthropic API for analysis.
+- **Gemini 2.0 Flash**: Uses [Google Generative AI API](https://ai.google.dev/).
+- **ChatGPT 3.5-turbo**: Uses [OpenAI API](https://platform.openai.com/docs).
+- **DeepSeek3**: Uses [DeepSeek API](https://platform.deepseek.com/).
+- **Claude 3**: Uses [Anthropic API](https://docs.anthropic.com/) for analysis.
 
 ## Security
 
