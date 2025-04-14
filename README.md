@@ -86,6 +86,13 @@ templates/
 - **DeepSeek3**: Uses [DeepSeek API](https://platform.deepseek.com/).
 - **Claude 3**: Uses [Anthropic API](https://docs.anthropic.com/) for analysis.
 
+## Screenshots
+
+<div style="display: flex; justify-content: space-around;">
+    <img src="assets/screenshot1.png" alt="Screenshot 1" style="width: 45%; border: 1px solid #ddd; border-radius: 4px; padding: 5px;">
+    <img src="assets/screenshot2.png" alt="Screenshot 2" style="width: 45%; border: 1px solid #ddd; border-radius: 4px; padding: 5px;">
+</div>
+
 ## Security
 
 - Ensure your `.env` file is listed in `.gitignore` to prevent accidental exposure of API keys.
