@@ -1,7 +1,10 @@
+# LLM Comparison Web App
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ![Python](https://img.shields.io/badge/Python-3.8%2B-blue)
 ![Flask](https://img.shields.io/badge/Flask-Web_App-orange)
-![License](https://img.shields.io/github/license/m3d4r-commits/LLM-Compare)
-# LLM Comparison Web App
+![Status](https://img.shields.io/badge/status-active-brightgreen)
+![Theme](https://img.shields.io/badge/theme-Matrix-black?logo=codeforces&logoColor=green)
 
 This project is a Flask-based web application that allows users to compare responses from multiple Large Language Models (LLMs) and analyze their differences. It supports models like Gemini 2.5 Pro, ChatGPT 3.5-turbo, and DeepSeek v3, with analysis powered by either Claude 3 or ChatGPT.
 
@@ -75,14 +78,6 @@ templates/
 
 - **Themes**: Modify the `static/styles.css` file to customize the appearance.
 - **Matrix Mode**: The "Matrix Mode" can be toggled using the button in the UI.
-
-## Screenshots
-
-### 🔍 Comparison View
-![Screenshot 1](assets/screenshot1.png)
-
-### 🧪 Matrix Mode
-![Screenshot 2](assets/screenshot2.png)
 
 ## API Integration
 
