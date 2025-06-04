@@ -28,6 +28,7 @@ anthropic_client = anthropic.Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
 app = Flask(__name__)
 
 def query_llm_1(question):
+    """Query Gemini 2.5 Pro and return the text response."""
     try:
         model = genai.GenerativeModel("gemini-pro")
         response = model.generate_content(question)
@@ -37,6 +38,7 @@ def query_llm_1(question):
         return f"Error with Gemini (LLM 1): {str(e)}"
 
 def query_llm_2(question):
+    """Query ChatGPT 3.5-turbo and return the text response."""
     try:
         response = client.chat.completions.create(
             model="gpt-3.5-turbo",
@@ -51,6 +53,7 @@ def query_llm_2(question):
         return f"Error with ChatGPT (LLM 2): {str(e)}"
 
 def query_llm_3(question):
+    """Query DeepSeek v3 and return the text response."""
     try:
         headers = {
             "Authorization": f"Bearer {os.getenv('DEEPSEEK_API_KEY')}",
@@ -76,6 +79,7 @@ def query_llm_3(question):
         return f"Error with DeepSeek (LLM 3): {str(e)}"
 
 def analyze_differences_with_llm_4(responses, analyzer="claude"):
+    """Use Claude 3 or ChatGPT to analyze the differences between responses."""
     try:
         combined = "\n".join([f"LLM {i+1}: {r}" for i, r in enumerate(responses)])
         prompt = f"Analyseer deze drie antwoorden:\n\n{combined}"
@@ -115,6 +119,7 @@ def _analysis_worker(futures, mapping, analyzer):
 
 @app.route("/", methods=["GET", "POST"])
 def home():
+    """Render the main page and handle question submission."""
     result_1 = result_2 = result_3 = analysis = ""
     times = {}
     analyzer_choice = "claude"

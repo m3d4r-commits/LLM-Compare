@@ -49,3 +49,25 @@ def test_index_post(client, monkeypatch):
     assert 'Response from Gemini 2.5 Pro' in data
     assert 'Gemini answer' in data
     assert 'analysis' in data
+
+
+def test_analysis_worker(monkeypatch):
+    """Ensure _analysis_worker returns ordered results to the analyzer."""
+    import askllm
+    from concurrent.futures import Future
+
+    # Prepare futures with preset results
+    futures = []
+    for text in ['a', 'b', 'c']:
+        f = Future()
+        f.set_result(text)
+        futures.append(f)
+
+    mapping = {f: i for i, f in enumerate(futures)}
+
+    # Mock the analyzer to simply join responses
+    monkeypatch.setattr(askllm, 'analyze_differences_with_llm_4',
+                        lambda resp, analyzer='claude': '|'.join(resp))
+
+    result = askllm._analysis_worker(futures, mapping, 'claude')
+    assert result == 'a|b|c'
