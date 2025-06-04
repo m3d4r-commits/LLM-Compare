@@ -79,6 +79,15 @@ templates/
    ```
 4. Enter a question, select an analysis model, and compare the responses.
 
+## Docker
+
+Build the image and run the container:
+
+```bash
+docker build -t llm-compare .
+docker run --env-file .env -p 5000:5000 llm-compare
+```
+
 ## Customization
 
 - **Themes**: Modify the `static/styles.css` file to customize the appearance.
