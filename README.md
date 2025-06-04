@@ -38,7 +38,7 @@ templates/
 1. Clone the repository:
    ```bash
    git clone https://github.com/m3d4r-commits/LLM-Compare
-   cd llm-webapp
+   cd LLM-Compare
    ```
 
 2. Create a virtual environment and activate it:
