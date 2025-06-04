@@ -33,9 +33,9 @@
     <div class="llm-info">
         <p>Comparing responses from:</p>
         <ul>
-            <li><strong>LLM 1:</strong> Gemini 2.5 Pro (Response Time: {{ times["LLM 1"] }} seconds)</li>
-            <li><strong>LLM 2:</strong> ChatGPT 3.5-turbo (Response Time: {{ times["LLM 2"] }} seconds)</li>
-            <li><strong>LLM 3:</strong> DeepSeek v3 (Response Time: {{ times["LLM 3"] }} seconds)</li>
+            <li><strong>LLM 1:</strong> Gemini 2.5 Pro (Response Time: {{ times.get('LLM 1', 'N/A') }} seconds)</li>
+            <li><strong>LLM 2:</strong> ChatGPT 3.5-turbo (Response Time: {{ times.get('LLM 2', 'N/A') }} seconds)</li>
+            <li><strong>LLM 3:</strong> DeepSeek v3 (Response Time: {{ times.get('LLM 3', 'N/A') }} seconds)</li>
         </ul>
     </div>
 
