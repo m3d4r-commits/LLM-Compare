@@ -34,3 +34,18 @@ def test_index_get(client):
     """Verify GET / returns HTTP 200."""
     response = client.get("/")
     assert response.status_code == 200
+
+def test_index_post(client, monkeypatch):
+    """Submit a POST request and verify expected placeholders in the response."""
+    # Mock LLM functions to avoid real network calls
+    monkeypatch.setattr('askllm.query_llm_1', lambda q: 'Gemini answer')
+    monkeypatch.setattr('askllm.query_llm_2', lambda q: 'GPT answer')
+    monkeypatch.setattr('askllm.query_llm_3', lambda q: 'DeepSeek answer')
+    monkeypatch.setattr('askllm.analyze_differences_with_llm_4', lambda r, analyzer='claude': 'analysis')
+
+    response = client.post('/', data={'question': 'test question', 'analyzer': 'claude'})
+    assert response.status_code == 200
+    data = response.get_data(as_text=True)
+    assert 'Response from Gemini 2.5 Pro' in data
+    assert 'Gemini answer' in data
+    assert 'analysis' in data
