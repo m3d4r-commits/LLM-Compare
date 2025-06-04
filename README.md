@@ -18,6 +18,7 @@ This project is a Flask-based web application that allows users to compare respo
 ## Project Structure
 
 ```plaintext
+.env.example        # Example environment file
 .env                # Environment variables (API keys)
 .gitignore          # Git ignore file
 askllm.py           # Main Flask application
@@ -52,7 +53,7 @@ templates/
    pip install -r requirements.txt
    ```
 
-4. Create a `.env` file in the root directory and add your API keys:
+4. Copy `.env.example` to `.env` and add your API keys:
    ```plaintext
    OPENAI_API_KEY=your_openai_api_key
    GOOGLE_API_KEY=your_google_api_key
