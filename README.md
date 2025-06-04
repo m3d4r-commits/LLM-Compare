@@ -119,6 +119,8 @@ pytest
 
 - Ensure your `.env` file is listed in `.gitignore` to prevent accidental exposure of API keys.
 - Do not share your API keys publicly.
+- API calls to the supported models may incur costs, so monitor your usage.
+- Use caution when running the server with input from untrusted users as their prompts are sent directly to the APIs.
 
 ## License
 
