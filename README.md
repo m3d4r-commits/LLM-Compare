@@ -62,17 +62,21 @@ templates/
 
 ## Usage
 
-1. Start the Flask server:
+1. *(Optional)* Enable debug mode by setting the `FLASK_DEBUG` environment
+   variable:
+   ```bash
+   export FLASK_DEBUG=true  # default is false
+   ```
+
+2. Start the Flask server:
    ```bash
    python askllm.py
    ```
-
-2. Open your browser and navigate to:
+3. Open your browser and navigate to:
    ```
    http://127.0.0.1:5000/
    ```
-
-3. Enter a question, select an analysis model, and compare the responses.
+4. Enter a question, select an analysis model, and compare the responses.
 
 ## Customization
 

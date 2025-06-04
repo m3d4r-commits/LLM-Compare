@@ -138,4 +138,5 @@ def home():
                            analyzer_choice=analyzer_choice)
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    debug = os.getenv("FLASK_DEBUG", "False").lower() == "true"
+    app.run(debug=debug)
