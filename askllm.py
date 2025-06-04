@@ -18,7 +18,7 @@ load_dotenv()
 required_keys = ["OPENAI_API_KEY", "GOOGLE_API_KEY", "DEEPSEEK_API_KEY", "ANTHROPIC_API_KEY"]
 for key in required_keys:
     if not os.getenv(key):
-        raise ValueError(f"{key} is niet gevonden. Zet deze in een .env bestand.")
+        raise ValueError(f"{key} not found. Please set it in a .env file.")
 
 # Clients
 client = OpenAI()
@@ -34,7 +34,7 @@ def query_llm_1(question):
         return response.text
     except Exception as e:
         logger.exception("Error querying Gemini")
-        return f"Fout bij Gemini (LLM 1): {str(e)}"
+        return f"Error with Gemini (LLM 1): {str(e)}"
 
 def query_llm_2(question):
     try:
@@ -48,7 +48,7 @@ def query_llm_2(question):
         return response.choices[0].message.content
     except Exception as e:
         logger.exception("Error querying ChatGPT")
-        return f"Fout bij ChatGPT (LLM 2): {str(e)}"
+        return f"Error with ChatGPT (LLM 2): {str(e)}"
 
 def query_llm_3(question):
     try:
@@ -73,7 +73,7 @@ def query_llm_3(question):
         return response.json()["choices"][0]["message"]["content"]
     except Exception as e:
         logger.exception("Error querying DeepSeek")
-        return f"Fout bij DeepSeek (LLM 3): {str(e)}"
+        return f"Error with DeepSeek (LLM 3): {str(e)}"
 
 def analyze_differences_with_llm_4(responses, analyzer="claude"):
     try:
@@ -102,7 +102,7 @@ def analyze_differences_with_llm_4(responses, analyzer="claude"):
 
     except Exception as e:
         logger.exception("Error during analysis")
-        return f"Fout bij analyse (LLM 4 - {analyzer}): {str(e)}"
+        return f"Error during analysis (LLM 4 - {analyzer}): {str(e)}"
 
 
 def _analysis_worker(futures, mapping, analyzer):
@@ -146,7 +146,7 @@ def home():
                     result = future.result()
                 except Exception as e:
                     logger.exception("Error executing LLM %s", idx + 1)
-                    result = f"Fout bij LLM {idx + 1}: {str(e)}"
+                    result = f"Error running LLM {idx + 1}: {str(e)}"
                 finally:
                     elapsed = round(time.time() - start_times[idx], 2)
                     times[f"LLM {idx + 1}"] = elapsed
