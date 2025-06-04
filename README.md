@@ -91,6 +91,14 @@ templates/
 - **DeepSeek3**: Uses [DeepSeek API](https://platform.deepseek.com/).
 - **Claude 3**: Uses [Anthropic API](https://docs.anthropic.com/) for analysis.
 
+## Running Tests
+
+Execute the automated test suite with [pytest](https://docs.pytest.org/):
+
+```bash
+pytest
+```
+
 ## Screenshots
 
 <div style="display: flex; justify-content: space-around;">
