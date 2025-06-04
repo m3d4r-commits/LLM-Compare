@@ -7,6 +7,11 @@ from openai import OpenAI
 import google.generativeai as genai
 import requests
 import anthropic
+import logging
+
+# Configure logger
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 # Load environment variables
 load_dotenv()
@@ -28,6 +33,7 @@ def query_llm_1(question):
         response = model.generate_content(question)
         return response.text
     except Exception as e:
+        logger.exception("Error querying Gemini")
         return f"Fout bij Gemini (LLM 1): {str(e)}"
 
 def query_llm_2(question):
@@ -41,6 +47,7 @@ def query_llm_2(question):
         )
         return response.choices[0].message.content
     except Exception as e:
+        logger.exception("Error querying ChatGPT")
         return f"Fout bij ChatGPT (LLM 2): {str(e)}"
 
 def query_llm_3(question):
@@ -65,6 +72,7 @@ def query_llm_3(question):
         response.raise_for_status()
         return response.json()["choices"][0]["message"]["content"]
     except Exception as e:
+        logger.exception("Error querying DeepSeek")
         return f"Fout bij DeepSeek (LLM 3): {str(e)}"
 
 def analyze_differences_with_llm_4(responses, analyzer="claude"):
@@ -93,6 +101,7 @@ def analyze_differences_with_llm_4(responses, analyzer="claude"):
             return response.choices[0].message.content
 
     except Exception as e:
+        logger.exception("Error during analysis")
         return f"Fout bij analyse (LLM 4 - {analyzer}): {str(e)}"
 
 @app.route("/", methods=["GET", "POST"])
@@ -120,6 +129,7 @@ def home():
                 try:
                     result = future.result()
                 except Exception as e:
+                    logger.exception("Error executing LLM %s", idx + 1)
                     result = f"Fout bij LLM {idx + 1}: {str(e)}"
                 finally:
                     elapsed = round(time.time() - start_times[idx], 2)
