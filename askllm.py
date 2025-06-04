@@ -56,7 +56,12 @@ def query_llm_3(question):
                 {"role": "user", "content": question}
             ]
         }
-        response = requests.post("https://api.deepseek.com/v1/chat/completions", json=payload, headers=headers)
+        response = requests.post(
+            "https://api.deepseek.com/v1/chat/completions",
+            json=payload,
+            headers=headers,
+            timeout=30,
+        )
         response.raise_for_status()
         return response.json()["choices"][0]["message"]["content"]
     except Exception as e:
