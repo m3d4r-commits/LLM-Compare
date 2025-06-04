@@ -1,0 +1,17 @@
+# virtualenv
+venv/
+.env
+__pycache__/
+*.pyc
+# common OS files
+.DS_Store
+# IDE directories
+.vscode/
+.idea/
+# Python cache
+*.pyo
+*.pyd
+# Jupyter checkpoints
+.ipynb_checkpoints/
+# pytest cache
+.pytest_cache/
