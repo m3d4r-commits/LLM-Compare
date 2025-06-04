@@ -104,6 +104,15 @@ def analyze_differences_with_llm_4(responses, analyzer="claude"):
         logger.exception("Error during analysis")
         return f"Fout bij analyse (LLM 4 - {analyzer}): {str(e)}"
 
+
+def _analysis_worker(futures, mapping, analyzer):
+    """Wait for LLM futures, gather results in order, and run analysis."""
+    responses = [None] * len(futures)
+    for future in futures:
+        idx = mapping[future]
+        responses[idx] = future.result()
+    return analyze_differences_with_llm_4(responses, analyzer=analyzer)
+
 @app.route("/", methods=["GET", "POST"])
 def home():
     result_1 = result_2 = result_3 = analysis = ""
@@ -117,12 +126,19 @@ def home():
         results = [None, None, None]
         start_times = {}
 
-        with ThreadPoolExecutor(max_workers=3) as executor:
+        with ThreadPoolExecutor(max_workers=4) as executor:
             future_to_index = {}
             for idx, func in enumerate(functions):
                 start_times[idx] = time.time()
                 future = executor.submit(func, question)
                 future_to_index[future] = idx
+
+            analysis_future = executor.submit(
+                _analysis_worker,
+                list(future_to_index.keys()),
+                future_to_index,
+                analyzer_choice,
+            )
 
             for future in as_completed(future_to_index):
                 idx = future_to_index[future]
@@ -136,8 +152,9 @@ def home():
                     times[f"LLM {idx + 1}"] = elapsed
                     results[idx] = result
 
-        result_1, result_2, result_3 = results
-        analysis = analyze_differences_with_llm_4(results, analyzer=analyzer_choice)
+            analysis = analysis_future.result()
+            result_1, result_2, result_3 = results
+
 
     return render_template("index.html",
                            result_1=result_1,
